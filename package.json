@@ -1,0 +1,35 @@
+{
+  "name": "csssimple",
+  "version": "0.0.1",
+  "description": "Yet anohter CSS postproccessor",
+  "main": "lib/index.js",
+  "author": {
+    "name": "Sivan",
+    "email": "sun.sivan@gmail.com",
+    "url": "http://lightcss.com/"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sivan/csssimple.git"
+  },
+  "keywords": [
+    "css",
+    "css3",
+    "css polyfill",
+    "postcss",
+    "postcss-plugins",
+    "proccessor",
+    "postproccessor"
+  ],
+  "peerDependencies": {
+    "postcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "postcss": "^4.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/sivan/csssimple/issues"
+  },
+  "homepage": "https://github.com/sivan/csssimple"
+}

@@ -1,0 +1,44 @@
+{
+  /**
+   * Airbnb config
+   */
+  // Environments
+  "browser": true,
+  "jquery": true,
+  "node": true,
+  // "esnext": true,
+
+  // Enforcing
+  "camelcase": true,
+  "eqeqeq": true,
+  // "indent": 2,
+  "latedef": true,
+  // "maxlen": 80,
+  "newcap": true,
+  "quotmark": "single",
+  // "strict": true,
+  "undef": true,
+  "unused": true,
+
+  // Relaxing
+  "eqnull": true,
+
+  /**
+   * My config
+   */
+  // Environments
+  "devel": true,
+
+  // Enforcing
+  "forin": true,
+  "freeze": true,
+  "immed": true,
+  "indent": 4,
+  "noarg": true,
+  "scripturl": false,
+  "strict": false,
+
+  // Custom Globals
+  "globals": {
+  }
+}
