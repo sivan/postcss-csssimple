@@ -56,8 +56,8 @@ gulp.watch('src/*.css', ['default']);
 ## PS
 谨慎使用，有问题找[正版](https://github.com/cssdream/cssgrace)。
 
-[Changelog](CHANGELOG.md)
-[License](LICENSE)
+##[Changelog](CHANGELOG.md)
+##[License](LICENSE)
 
 -- EOF --
 
