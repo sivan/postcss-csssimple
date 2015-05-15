@@ -1,6 +1,6 @@
 # CSS Simple
 
-拿一丝的 CSS Grace 改的，原项目说明看 [CSS Grace](https://github.com/cssdream/cssgrace)
+拿一丝的 CSS Grace 改的，原项目说明看 [CSS Grace](https://github.com/cssdream/cssgrace)。
 
 ## 改动
 * 增加了解决部分 IE6 Bugs 的处理；
@@ -53,10 +53,11 @@ gulp.task('default', function () {
 gulp.watch('src/*.css', ['default']);
 ```
 
-谨慎使用，怕有问题建议[正版](https://github.com/cssdream/cssgrace)。
+## PS
+谨慎使用，有问题找[正版](https://github.com/cssdream/cssgrace)。
 
-## [Changelog](CHANGELOG.md)
-## [License](LICENSE)
+[Changelog](CHANGELOG.md)
+[License](LICENSE)
 
 -- EOF --
 
