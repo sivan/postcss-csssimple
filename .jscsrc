@@ -1,15 +1,8 @@
 {
-  "preset": "airbnb", // 相较于 google 的规范，airbnb 更细致且松散
+  "preset": "airbnb",
   "excludeFiles": ["node_modules/**"],
-
-  /*
-   * 以下配置用于覆盖 Airbnb JavaScript Style Guide Preset
-   */
-  "disallowMultipleVarDecl": null,
   "disallowMultipleVarDecl": "exceptUndefined",
-  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
-
-  // Airbnb 与 Google 规范中断行处理都过于严格
+  "requireCamelCaseOrUpperCaseIdentifiers": null,
   "requirePaddingNewLinesAfterBlocks": {
     "allExcept": [
       "inCallExpressions",
@@ -17,10 +10,5 @@
       "inProperties"
     ]
   },
-
-  // @Todo：是否限制单行长度
-  // "maximumLineLength": 80,
-
-  // 习惯使用 4 空格缩进
-  "validateIndentation": 4
+  "maximumLineLength": 120
 }
