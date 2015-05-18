@@ -1,0 +1,14 @@
+{
+  "preset": "airbnb",
+  "excludeFiles": ["node_modules/**"],
+  "disallowMultipleVarDecl": "exceptUndefined",
+  "requireCamelCaseOrUpperCaseIdentifiers": null,
+  "requirePaddingNewLinesAfterBlocks": {
+    "allExcept": [
+      "inCallExpressions",
+      "inArrayExpressions",
+      "inProperties"
+    ]
+  },
+  "maximumLineLength": 120
+}
