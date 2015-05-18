@@ -6,6 +6,8 @@
 [ci-img]:  https://travis-ci.org/sivan/postcss-csssimple.svg
 [ci]:      https://travis-ci.org/sivan/postcss-csssimple
 
+[README-zh](README-zh.md)
+
 ```css
 .foo {
     /* Input example */
