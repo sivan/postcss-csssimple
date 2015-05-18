@@ -1,6 +1,6 @@
 # PostCSS CSSSimple [![Build Status](https://travis-ci.org/sivan/postcss-csssimple.svg)](https://travis-ci.org/sivan/postcss-csssimple)
 
-A [PostCSS](https://github.com/postcss/postcss) plugin makes your CSS compatible with standard codes.
+A [PostCSS](https://github.com/postcss/postcss) plugin makes your CSS codes simple and compatible. Fix common browser bugs and remove unnecessary code.
 
 [中文说明 →](README-zh.md)
 
@@ -111,7 +111,7 @@ postcss([require('postcss-csssimple')])
 ```
 
 ## About
-This project is modified from [CSSGrace](https://github.com/cssdream/cssgrace) and add some features to fix common IE bugs.
+This project is modified from [CSSGrace](https://github.com/cssdream/cssgrace) and add some features to fix common IE bugs, and CSSSimple doesn't support custom syntax to keep the code follow standards.
 
 ##[Changelog](CHANGELOG.md)
 ##[License](LICENSE)
