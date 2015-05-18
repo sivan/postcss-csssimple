@@ -16,7 +16,7 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
       var next = decl.next();
       var declAfter;
 
-      if (next && next.type == 'comment' && next.before.indexOf('\n') == -1) {
+      if (next && next.type === 'comment' && next.before.indexOf('\n') === -1) {
         declAfter = next;
       } else {
         declAfter = decl;
@@ -84,8 +84,8 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
       if (decl.prop === 'text-overflow' && decl.value === 'ellipsis') {
         var reBefore = decl.before.replace(regBlankLine, '$1');
         var declFlag = {
-          overflow: true,
-          whiteSpace: true
+          overflow: false,
+          whiteSpace: false
         };
 
         decl.parent.eachDecl(function(decl) {
@@ -101,7 +101,7 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
           }
         });
 
-        if (declFlag.overflow && declFlag.whiteSpace) {
+        if (!declFlag.overflow && !declFlag.whiteSpace) {
           insertDecl(decl, i, [{
               before: reBefore,
               prop: 'overflow',
@@ -136,7 +136,7 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
     function useOpacity(decl, i) {
       var amount = Math.round(decl.value * 100);
 
-      if (decl.prop == 'opacity') {
+      if (decl.prop === 'opacity') {
         var reBefore = decl.before.replace(regBlankLine, '$1');
 
         insertDecl(decl, i, {
@@ -154,10 +154,10 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
     function useRgbaBgColor(decl, i) {
       //十六进制不足两位自动补 0
       function pad(str) {
-        return str.length == 1 ? '0' + str : '' + str;
+        return str.length === 1 ? '0' + str : '' + str;
       }
 
-      if ((decl.prop == 'background' || decl.prop == 'background-color') &&
+      if ((decl.prop === 'background' || decl.prop === 'background-color') &&
           decl.value.match(regRGBA)) {
         // rgba 转换为 AARRGGBB
         var colorR = pad(parseInt(RegExp.$1).toString(16));
@@ -171,50 +171,19 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
         insertDecl(decl, i, {
           before: reBefore,
           prop: 'filter',
-          value: 'progid:DXImageTransform.Microsoft.gradient(startColorstr=' + ARGB + ', endColorstr=' + ARGB + ')'
-        });
-
-        // IE9 rgba 和滤镜都支持，插入 :root hack 去掉滤镜
-        var newSelector = ':root ' + decl.parent.selector;
-
-        var nextrule = postcss.rule({
-          selector: newSelector
-        });
-        decl.parent.parent.insertAfter(decl.parent, nextrule);
-        nextrule.append({
-          prop: 'filter',
-          value: 'none\\9'
+          value: 'progid:DXImageTransform.Microsoft.gradient(startColorstr=' + ARGB + ', endColorstr=' + ARGB + ')\\9'
         });
       }
     }
 
     // IE Bug 类
-    /**
-     * fixIe6DoubleMargin
-     * 当存在 float: left|right & margin 不为 0 时增加 _display: inline; 以解决 IE6 双倍边距 bug。
-     */
-    function fixIe6DoubleMargin(decl, i) {
-      if ((decl.prop == 'float') && (decl.value != 'none')) {
-        var reBefore = decl.before.replace(regBlankLine, '$1');
-
-        decl.parent.each(function(neighbor) {
-          if ((neighbor.prop == 'margin') && (neighbor.value != '0')) {
-            insertDecl(decl, i, {
-              before: reBefore,
-              prop: '_display',
-              value: 'inline'
-            });
-          }
-        });
-      }
-    }
-
+    //
     /**
      * fixInlineBlock
      * 当使用 display: inline-block; 时解决 IE6~7 Bug。
      */
     function fixInlineBlock(decl, i) {
-      if (decl.prop == 'display' && decl.value == 'inline-block') {
+      if (decl.prop === 'display' && decl.value === 'inline-block') {
         var reBefore = decl.before.replace(regBlankLine, '$1');
         var declFlag = {
           inline: false,
@@ -223,7 +192,7 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
 
         decl.parent.each(function(neighbor) {
           // 有 *display: inline; 或 zoom: 1; 时就不插了
-          if (neighbor.before === '*' && neighbor.prop === 'display' && (neighbor.value === 'inline')) {
+          if (neighbor.before.indexOf('*') !== -1 && neighbor.prop === 'display' && (neighbor.value === 'inline')) {
             declFlag.inline = true;
           }
 
@@ -251,16 +220,36 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
     }
 
     /**
+     * fixIe6DoubleMargin
+     * 当存在 float: left|right & margin 不为 0 时增加 _display: inline; 以解决 IE6 双倍边距 bug。
+     */
+    function fixIe6DoubleMargin(decl, i) {
+      if ((decl.prop === 'float') && (decl.value !== 'none')) {
+        var reBefore = decl.before.replace(regBlankLine, '$1');
+
+        decl.parent.each(function(neighbor) {
+          if ((neighbor.prop === 'margin') && (neighbor.value !== '0')) {
+            insertDecl(decl, i, {
+              before: reBefore,
+              prop: '_display',
+              value: 'inline'
+            });
+          }
+        });
+      }
+    }
+
+    /**
      * fixIe6Overflow
      * 当存在 overflow: hidden 时增加 _zoom: 1; 以解决 IE6 overflow: hidden; 失效 bug。
      */
     function fixIe6Overflow(decl, i) {
-      if ((decl.prop == 'overflow') && (decl.value == 'hidden')) {
+      if ((decl.prop === 'overflow') && (decl.value === 'hidden')) {
         var reBefore = decl.before.replace(regBlankLine, '$1');
         var declFlag = {zoom: false};
 
         decl.parent.each(function(neighbor) {
-          if ((neighbor.prop == 'zoom') && (neighbor.value == '1')) {
+          if ((neighbor.prop === 'zoom') && (neighbor.value === '1')) {
             declFlag.zoom = true;
           }
         });

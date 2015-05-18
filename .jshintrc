@@ -19,6 +19,7 @@
   "scripturl": false,
   "strict": false,
   "globals": {
-    "describe": false
+    "describe": false,
+    "it": false
   }
 }
