@@ -1,3 +1,23 @@
+# Editor generate files
 .idea
+.settings
+nbproject
+*.sublime-project
+*.sublime-workspace
+
+# Dev dependencies and cache files
+.sass-cache
+node_modules
+*.log
+
+# Folder view configuration files
 .DS_Store
-node_modules/
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
