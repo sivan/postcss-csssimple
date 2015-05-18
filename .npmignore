@@ -1,8 +1,5 @@
 .gitignore
-
-node_modules/
-
-test/
 .travis.yml
-
+node_modules/
+test/
 gulpfile.js
