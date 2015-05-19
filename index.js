@@ -1,7 +1,9 @@
 var postcss = require('postcss');
 
 module.exports = postcss.plugin('postcss-csssimple', function(opts) {
-  opts = opts || {};
+  var defaults = {};
+
+  opts = opts || defaults;
 
   return function(css) {
     var regRGBA = /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*([\d\.]+\s*)/gi;
