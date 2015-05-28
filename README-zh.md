@@ -81,11 +81,11 @@ PostCSS CSSSimple 是一个 [PostCSS](https://github.com/postcss/postcss) 插件
     _zoom: 1;
     white-space: nowrap;
     opacity: .8;
-    filter: alpha(opacity=80)\\9;
+    filter: alpha(opacity=80)\9;
 }
 .baz {
     background: rgba(0, 0, 0, .2);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#33000000", endColorstr="#33000000")\\9;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#33000000", endColorstr="#33000000")\9;
 }
 ```
 
