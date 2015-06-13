@@ -2,17 +2,14 @@
   "name": "postcss-csssimple",
   "version": "0.2.1",
   "description": "A PostCSS plugin makes you write CSS simple.",
+  "main": "index.js",
   "keywords": [
     "postcss",
     "css",
     "postcss-plugin",
     "csssimple"
   ],
-  "author": {
-    "name": "Sivan",
-    "email": "sun.sivan@gmail.com",
-    "url": "http://lightcss.com/"
-  },
+  "author": "Sivan <sun.sivan@gmail.com> (http://lightcss.com/)",
   "homepage": "https://github.com/sivan/postcss-csssimple",
   "license": "MIT",
   "repository": {
@@ -31,5 +28,11 @@
   },
   "scripts": {
     "test": "gulp"
+  },
+  "bugs": {
+    "url": "https://github.com/sivan/postcss-csssimple/issues"
+  },
+  "directories": {
+    "test": "test"
   }
 }
