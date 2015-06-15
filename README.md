@@ -113,7 +113,7 @@ postcss([require('postcss-csssimple')])
 ## About
 This project is modified from [CSSGrace](https://github.com/cssdream/cssgrace) and add some features to fix common IE bugs, and CSSSimple doesn't support custom syntax to keep the code follow standards.
 
-##[Changelog](CHANGELOG.md)
-##[License](LICENSE)
+## [Changelog](CHANGELOG.md)  
+## [License](LICENSE)
 
 -- EOF --

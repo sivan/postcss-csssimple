@@ -125,6 +125,8 @@ PostCSS CSSSimple 是一个 [PostCSS](https://github.com/postcss/postcss) 插件
 
 ## 使用方法
 
+[通过 npm 安装](https://www.npmjs.com/package/postcss-csssimple)后在 postcss 配置中载入 postcss-csssimple 插件即可。
+
 ```js
 postcss([require('postcss-csssimple')])
 ```
@@ -132,7 +134,7 @@ postcss([require('postcss-csssimple')])
 ## 关于
 项目源自一丝的 CSS Grace，我做了一些修改，原项目说明看 [CSS Grace](https://github.com/cssdream/cssgrace)。
 
-##[Changelog](CHANGELOG.md)
-##[License](LICENSE)
+## [Changelog](CHANGELOG.md)  
+## [License](LICENSE)
 
 -- EOF --
