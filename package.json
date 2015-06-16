@@ -1,6 +1,6 @@
 {
   "name": "postcss-csssimple",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A PostCSS plugin makes you write CSS simple.",
   "main": "index.js",
   "keywords": [
