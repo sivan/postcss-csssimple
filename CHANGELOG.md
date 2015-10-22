@@ -2,6 +2,8 @@
 
 ## v1.1.0（2015.10.22）
 * 升级 API 兼容 PostCSS 5.0；
+* 增加支持 `overflow-wrap` 兼容性处理；
+* 增加支持 `will-change` 兼容性处理；
 * 分割任务；
 * 切换到 eslint 进行代码检查。
 

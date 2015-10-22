@@ -25,9 +25,11 @@ module.exports = postcss.plugin('postcss-csssimple', function() {
     css.walkDecls(function(decl, i) {
       optimization.removeDisplay(decl);
       optimization.removeFloat(decl);
+      fallback.useOverflowWrap(decl, i);
       fallback.useEllipsis(decl, i);
       fallback.useOpacity(decl, i);
       fallback.useRgbaBgColor(decl, i);
+      fallback.useWillChange(decl, i);
       fallback.fixInlineBlock(decl, i);
       fallback.fixIe6DoubleMargin(decl, i);
       fallback.fixIe6Overflow(decl, i);

@@ -47,6 +47,16 @@ describe('CSS Simple Tests: ', function() {
       { }, done);
   });
 
+  it('Use overflow-wrap with word-wrap', function(done) {
+    test(
+      '.test1 { overflow-wrap: break-word; } .test2 { word-wrap: break-word; overflow-wrap: break-word; } ' +
+      '.test3 { word-wrap: break-word; }',
+      '.test1 { overflow-wrap: break-word; word-wrap: break-word; } ' +
+      '.test2 { word-wrap: break-word; overflow-wrap: break-word; } ' +
+      '.test3 { word-wrap: break-word; }',
+      {}, done);
+  });
+
   it('Use text-overflow: ellipsis', function(done) {
     test(
       '.test1 { text-overflow: ellipsis; } .test2 { text-overflow: ellipsis; overflow: auto; } ' +
@@ -72,6 +82,13 @@ describe('CSS Simple Tests: ', function() {
         '.test2 { background-color: rgba(0, 0, 0, .2); ' +
         'filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#33000000", endColorstr="#33000000")\\9; }',
       { }, done);
+  });
+
+  it('Use will-change', function(done) {
+    test(
+      '.test1 { will-change: transform; }',
+      '.test1 { will-change: transform; backface-visibility: hidden; }',
+      {}, done);
   });
 
   it('Fix IE6~7 inline-block', function(done) {

@@ -1,53 +1,24 @@
 # PostCSS CSSSimple [![Build Status](https://travis-ci.org/sivan/postcss-csssimple.svg)](https://travis-ci.org/sivan/postcss-csssimple)
 
-A [PostCSS](https://github.com/postcss/postcss) plugin makes your CSS codes simple and compatible. Fix common browser bugs and remove unnecessary code.
+A [PostCSS](https://github.com/postcss/postcss) plugin makes your CSS codes simple and compatible. It fix common browser bugs, add useful polyfills and remove unnecessary code. [中文说明](README-zh.md)
 
-[中文说明 →](README-zh.md)
+* Useful polyfill to complete `text-overflow`, RGBA etc. Especially contains mix-ins which Autoprefixer won't support(Convert `::before` to `:before` or add `word-wrap` with `overflow-wrap`).
+* Fix common IE6~8 bugs;
+* Remove unneccessary code.
+
+Recommend use CSS-Simple WITH [Autoprefixer](https://github.com/postcss/autoprefixer).
 
 ## Features
-### Remove unnecessary code
-
-```css
-/* Input example */
-.foo {
-    position: absolute;
-    display: block;
-}
-.bar {
-    float: left;
-    display: block;
-}
-.baz {
-    position: absolute;
-    float: left;
-}
-```
-
-```css
-/* Output example */
-.foo {
-    position: absolute;
-}
-.bar {
-    float: left;
-}
-.baz {
-    position: absolute;
-}
-```
 
 ### Useful mixins
 
 ```css
 /* Input example */
 .foo::before {
-    position: fixed;
-    float: left;
-    content: '';
-}
-.bar {
     text-overflow: ellipsis;
     overflow: hidden;
+}
+.bar {
     opacity: .8;
 }
 .baz {
@@ -58,14 +29,12 @@ A [PostCSS](https://github.com/postcss/postcss) plugin makes your CSS codes simp
 ```css
 /* Output example */
 .foo:before {
-    position: fixed;
-    content: '';
-}
-.bar {
     text-overflow: ellipsis;
     overflow: hidden;
     _zoom: 1;
     white-space: nowrap;
+}
+.bar {
     opacity: .8;
     filter: alpha(opacity=80)\9;
 }
@@ -104,6 +73,37 @@ A [PostCSS](https://github.com/postcss/postcss) plugin makes your CSS codes simp
 }
 ```
 
+### Remove unnecessary code
+
+```css
+/* Input example */
+.foo {
+    position: absolute;
+    display: inline-block;
+}
+.bar {
+    float: left;
+    display: block;
+}
+.baz {
+    position: absolute;
+    float: left;
+}
+```
+
+```css
+/* Output example */
+.foo {
+    position: absolute;
+}
+.bar {
+    float: left;
+}
+.baz {
+    position: absolute;
+}
+```
+
 ## Usage
 
 ```js
@@ -111,7 +111,7 @@ postcss([require('postcss-csssimple')])
 ```
 
 ## About
-This project is modified from [CSSGrace](https://github.com/cssdream/cssgrace) and add some features to fix common IE bugs, and CSSSimple doesn't support custom syntax to keep the code follow standards.
+This project is a fork from [CSSGrace](https://github.com/cssdream/cssgrace) and add new features to fix common IE bugs, and CSS-Simple doesn't support custom syntax to keep the code follow standards.
 
 ## [Changelog](CHANGELOG.md)  
 ## [License](LICENSE)

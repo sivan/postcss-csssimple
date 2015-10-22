@@ -4,8 +4,9 @@ var mocha = require('gulp-mocha');
 
 gulp.task('lint', function() {
   return gulp.src(['index.js', 'gulpfile.js'])
-      .pipe(eslint())
-      .pipe(eslint.format());
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('test', function() {
