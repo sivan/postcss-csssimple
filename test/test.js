@@ -1,6 +1,5 @@
 var postcss = require('postcss');
-var expect  = require('chai').expect;
-
+var expect = require('chai').expect;
 var plugin = require('../');
 
 var test = function(input, output, opts, done) {

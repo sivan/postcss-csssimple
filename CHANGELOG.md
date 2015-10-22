@@ -1,7 +1,12 @@
 #更新记录　CHANGELOG
 
+## v1.1.0（2015.10.22）
+* 升级 API 兼容 PostCSS 5.0；
+* 分割任务；
+* 切换到 eslint 进行代码检查。
+
 ## v1.0.5（2015.9.22）
-* 修复人为设置 `position: aboslute || fixed` 或 `float: left` 与 `display: block` 共存时的代码清理问题。
+* 修复人为设置 `position: aboslute || fixed` 或 `float: left` 与 `display: block` 共存时的代码误清理问题。
 
 ## v1.0.0（2015.6.14）
 * 稳定测试通过发布到 npm。

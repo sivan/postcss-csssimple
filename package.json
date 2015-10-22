@@ -26,7 +26,8 @@
     "extend": "^3.0.0",
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.0.0",
-    "gulp-mocha": "^2.0.1"
+    "gulp-mocha": "^2.0.1",
+    "require-dir": "^0.3.0"
   },
   "scripts": {
     "lint": "gulp lint",
