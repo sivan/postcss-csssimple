@@ -1,9 +1,17 @@
+'use strict';
 var postcss = require('postcss');
+var extend = require('extend');
 
 module.exports = postcss.plugin('postcss-csssimple', function(opts) {
-  var defaults = {};
+  var defaults, options;
 
-  opts = opts || defaults;
+  defaults = {
+    ie: 6
+  };
+
+  options = extend({}, defaults, opts);
+
+  console.log(options);
 
   return function(css) {
     var regRGBA = /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*([\d\.]+\s*)/gi;
@@ -14,9 +22,9 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      * insertDecls
      * 在后面插入新的属性，并保持注释在当前行。如果传入多个新属性，则分别插入。
      */
-    function insertDecl(decl, i, newDecls) {
+    function insertDecl(decl, index, newDecls) {
       var next = decl.next();
-      var declAfter;
+      var declAfter, i, len;
 
       if (next && next.type === 'comment' && next.before.indexOf('\n') === -1) {
         declAfter = next;
@@ -25,8 +33,8 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
       }
 
       if (Object.prototype.toString.call(newDecls) === '[object Array]') {
-        for (var index = 0, len = newDecls.length; index < len; index += 1) {
-          decl.parent.insertAfter(declAfter, newDecls[index]);
+        for (i = 0, len = newDecls.length; i < len; i += 1) {
+          decl.parent.insertAfter(declAfter, newDecls[i]);
         }
       } else {
         decl.parent.insertAfter(declAfter, newDecls);
@@ -45,8 +53,8 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
       ) {
         // 不存在 display: none 时删掉 display
         decl.parent.each(function(neighbor) {
-          if ((neighbor.prop === 'display') && (neighbor.value === 'block' || neighbor.value === 'inline-block')) {
-            //存在时删掉它
+          if ((neighbor.prop === 'display') && (neighbor.value === 'inline-block')) {
+            // 存在时删掉它
             neighbor.removeSelf();
           }
         });
@@ -72,9 +80,9 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      * usePseudoElements
      * 伪元素选择器只保留一个冒号，兼容低级浏览器。
      */
-    function usePseudoElements(css) {
-      if (css.selector.match(regAllPseudo)) {
-        css.selector = css.selector.replace(/::/g, ':');
+    function usePseudoElements(cssRule) {
+      if (cssRule.selector.match(regAllPseudo)) {
+        cssRule.selector = cssRule.selector.replace(/::/g, ':');
       }
     }
 
@@ -83,28 +91,31 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      * 当使用 text-overflow: ellipsis; 时自动处理已保证显示省略号。
      */
     function useEllipsis(decl, i) {
+      var reBefore, declFlag;
+
       if (decl.prop === 'text-overflow' && decl.value === 'ellipsis') {
-        var reBefore = decl.before.replace(regBlankLine, '$1');
-        var declFlag = {
+        reBefore = decl.before.replace(regBlankLine, '$1');
+        declFlag = {
           overflow: false,
           whiteSpace: false
         };
 
-        decl.parent.eachDecl(function(decl) {
+        decl.parent.eachDecl(function(declRule) {
           // 如果存在 overflow 且不等于 hidden, 增加 white-space
-          if (decl.prop === 'overflow') {
-            decl.value = 'hidden';
+          if (declRule.prop === 'overflow') {
+            declRule.value = 'hidden';
             declFlag.overflow = true;
           }
 
-          if (decl.prop === 'white-space') {
-            decl.value = 'nowrap';
+          if (declRule.prop === 'white-space') {
+            declRule.value = 'nowrap';
             declFlag.whiteSpace = true;
           }
         });
 
         if (!declFlag.overflow && !declFlag.whiteSpace) {
-          insertDecl(decl, i, [{
+          insertDecl(decl, i, [
+            {
               before: reBefore,
               prop: 'overflow',
               value: 'hidden'
@@ -137,9 +148,10 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      */
     function useOpacity(decl, i) {
       var amount = Math.round(decl.value * 100);
+      var reBefore;
 
       if (decl.prop === 'opacity') {
-        var reBefore = decl.before.replace(regBlankLine, '$1');
+        reBefore = decl.before.replace(regBlankLine, '$1');
 
         insertDecl(decl, i, {
           before: reBefore,
@@ -154,7 +166,9 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      * background rgba 转换为 IE ARGB
      */
     function useRgbaBgColor(decl, i) {
-      //十六进制不足两位自动补 0
+      var colorR, colorG, colorB, colorA, ARGB, reBefore;
+
+      // 十六进制不足两位自动补 0
       function pad(str) {
         return str.length === 1 ? '0' + str : '' + str;
       }
@@ -162,14 +176,14 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
       if ((decl.prop === 'background' || decl.prop === 'background-color') &&
           decl.value.match(regRGBA)) {
         // rgba 转换为 AARRGGBB
-        var colorR = pad(parseInt(RegExp.$1).toString(16));
-        var colorG = pad(parseInt(RegExp.$2).toString(16));
-        var colorB = pad(parseInt(RegExp.$3).toString(16));
-        var colorA = pad(parseInt(RegExp.$4 * 255).toString(16));
-        var ARGB = '"' + '#' + colorA + colorR + colorG + colorB + '"';
+        colorR = pad(parseInt(RegExp.$1, 10).toString(16));
+        colorG = pad(parseInt(RegExp.$2, 10).toString(16));
+        colorB = pad(parseInt(RegExp.$3, 10).toString(16));
+        colorA = pad(parseInt(RegExp.$4 * 255, 10).toString(16));
+        ARGB = '"' + '#' + colorA + colorR + colorG + colorB + '"';
 
         // 插入IE半透明滤镜
-        var reBefore = decl.before.replace(regBlankLine, '$1');
+        reBefore = decl.before.replace(regBlankLine, '$1');
         insertDecl(decl, i, {
           before: reBefore,
           prop: 'filter',
@@ -185,9 +199,10 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      * 当使用 display: inline-block; 时解决 IE6~7 Bug。
      */
     function fixInlineBlock(decl, i) {
+      var reBefore, declFlag;
       if (decl.prop === 'display' && decl.value === 'inline-block') {
-        var reBefore = decl.before.replace(regBlankLine, '$1');
-        var declFlag = {
+        reBefore = decl.before.replace(regBlankLine, '$1');
+        declFlag = {
           inline: false,
           zoom: false
         };
@@ -226,9 +241,10 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      * 当存在 float: left|right & margin 不为 0 时增加 _display: inline; 以解决 IE6 双倍边距 bug。
      */
     function fixIe6DoubleMargin(decl, i) {
-      if ((decl.prop === 'float') && (decl.value !== 'none')) {
-        var reBefore = decl.before.replace(regBlankLine, '$1');
+      var reBefore;
 
+      if ((decl.prop === 'float') && (decl.value !== 'none')) {
+        reBefore = decl.before.replace(regBlankLine, '$1');
         decl.parent.each(function(neighbor) {
           if ((neighbor.prop === 'margin') && (neighbor.value !== '0')) {
             insertDecl(decl, i, {
@@ -246,10 +262,11 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
      * 当存在 overflow: hidden 时增加 _zoom: 1; 以解决 IE6 overflow: hidden; 失效 bug。
      */
     function fixIe6Overflow(decl, i) {
-      if ((decl.prop === 'overflow') && (decl.value === 'hidden')) {
-        var reBefore = decl.before.replace(regBlankLine, '$1');
-        var declFlag = {zoom: false};
+      var reBefore, declFlag;
 
+      if ((decl.prop === 'overflow') && (decl.value === 'hidden')) {
+        reBefore = decl.before.replace(regBlankLine, '$1');
+        declFlag = {zoom: false};
         decl.parent.each(function(neighbor) {
           if ((neighbor.prop === 'zoom') && (neighbor.value === '1')) {
             declFlag.zoom = true;
@@ -266,12 +283,12 @@ module.exports = postcss.plugin('postcss-csssimple', function(opts) {
       }
     }
 
-    //遍历 selectors
+    // 遍历 selectors
     css.eachRule(function(rule) {
       usePseudoElements(rule);
     });
 
-    //遍历 decl
+    // 遍历 decl
     css.eachDecl(function(decl, i) {
       removeDisplay(decl);
       removeFloat(decl);

@@ -1,6 +1,6 @@
 {
   "name": "postcss-csssimple",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A PostCSS plugin makes you write CSS simple.",
   "main": "index.js",
   "keywords": [
@@ -17,16 +17,19 @@
     "url": "https://github.com/sivan/postcss-csssimple.git"
   },
   "dependencies": {
-    "postcss": "^4.1.9"
+    "postcss": "^5.0.10"
   },
   "devDependencies": {
     "chai": "^2.3.0",
-    "gulp": "^3.8.11",
-    "gulp-jscs": "^1.6.0",
-    "gulp-jshint": "^1.10.0",
+    "eslint": "^1.6.0",
+    "eslint-config-airbnb": "^0.1.0",
+    "extend": "^3.0.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^1.0.0",
     "gulp-mocha": "^2.0.1"
   },
   "scripts": {
+    "lint": "gulp lint",
     "test": "gulp"
   },
   "bugs": {

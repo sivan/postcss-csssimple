@@ -14,9 +14,9 @@ var test = function(input, output, opts, done) {
 };
 
 describe('CSS Simple Tests: ', function() {
-  it('Remove unnecessary display: block with position: absolute|fixed', function(done) {
+  it('Remove unnecessary display: inline-block with position: absolute|fixed', function(done) {
     test(
-      '.test1 { position: absolute; display: block; } .test2 { position: fixed; display: inline-block; } ' +
+      '.test1 { position: absolute; display: inline-block; } .test2 { position: fixed; display: inline-block; } ' +
         '.test3 { position: relative; display: block; } .test4 { position: static; display: block; }',
       '.test1 { position: absolute; } .test2 { position: fixed; } ' +
         '.test3 { position: relative; display: block; } .test4 { position: static; display: block; }',
@@ -27,7 +27,7 @@ describe('CSS Simple Tests: ', function() {
     test(
       '.test1 { float: left; display: block; } .test2 { float: right; display: inline-block; } ' +
         '.test3 { float: none; display: none; }',
-      '.test1 { float: left; } .test2 { float: right; } ' +
+      '.test1 { float: left; display: block; } .test2 { float: right; } ' +
         '.test3 { float: none; display: none; }',
       { }, done);
   });

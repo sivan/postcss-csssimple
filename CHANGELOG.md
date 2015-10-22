@@ -1,5 +1,8 @@
 #更新记录　CHANGELOG
 
+## v1.0.5（2015.9.22）
+* 修复人为设置 `position: aboslute || fixed` 或 `float: left` 与 `display: block` 共存时的代码清理问题。
+
 ## v1.0.0（2015.6.14）
 * 稳定测试通过发布到 npm。
 
