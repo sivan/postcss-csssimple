@@ -1,6 +1,6 @@
 .gitignore
-.travis.yml
-.idea/
-gulpfile.js
 node_modules/
+.idea/
 test/
+gulpfile.js
+.travis.yml
