@@ -4,10 +4,10 @@
   "description": "A PostCSS plugin makes you write CSS simple.",
   "main": "index.js",
   "keywords": [
-    "postcss",
     "css",
-    "postcss-plugin",
-    "csssimple"
+    "csssimple",
+    "postcss",
+    "postcss-plugin"
   ],
   "author": "Sivan <sun.sivan@gmail.com> (http://lightcss.com/)",
   "homepage": "https://github.com/sivan/postcss-csssimple",
